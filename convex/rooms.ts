@@ -11,7 +11,10 @@ export const createRoom = mutation({
 	},
 	handler: async (ctx, args) => {
 		const identity = await ctx.auth.getUserIdentity();
-		if (!identity) throw new ConvexError("Unauthorized");
+		// if (!identity) throw new ConvexError("Unauthorized");
+        if (!identity) {
+            return;
+          }
 
 		const existingRoom = await ctx.db
 			.query("rooms")
