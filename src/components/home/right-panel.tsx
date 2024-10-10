@@ -7,10 +7,10 @@ import ChatPlaceHolder from "@/components/home/chat-placeholder";
 import GroupMembersDialog from "@/components/home/group-members-dialog";
 
 const RightPanel = () => {
-	const selectedConversation = true;
-	if (!selectedConversation) return <ChatPlaceHolder />;
+	const selectedRoom = true;
+	if (!selectedRoom) return <ChatPlaceHolder />;
 
-	const conversationName = "John Doe";
+	const roomName = "John Doe";
     const isGroup = true;
 
 	return (
@@ -25,7 +25,7 @@ const RightPanel = () => {
 							</AvatarFallback>
 						</Avatar>
 						<div className='flex flex-col'>
-							<p>{conversationName}</p>
+							<p>{roomName}</p>
 							{isGroup && <GroupMembersDialog />}
 						</div>
 					</div>
