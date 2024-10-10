@@ -82,24 +82,24 @@ export const getUsers = query({
   handler: async (ctx) => {
     const identity = await ctx.auth.getUserIdentity();
     if (!identity) {
-      throw new ConvexError("Unauthorized");
-    }
+        return;
+      }
 
     const users = await ctx.db.query("users").collect();
-    return users.filter(
-      (user) => user.tokenIdentifier !== identity.tokenIdentifier
-    );
+    return users;
+    // return users.filter(
+    //   (user) => user.tokenIdentifier !== identity.tokenIdentifier
+    // );
   },
 });
 
 export const getMe = query({
   args: {},
-  handler: async (ctx) => {
+  handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
     if (!identity) {
-      throw new ConvexError("Unauthorized");
+      return;
     }
-
     const user = await ctx.db
       .query("users")
       .withIndex("by_tokenIdentifier", (q) =>
@@ -121,8 +121,8 @@ export const getGroupMembers = query({
     const identity = await ctx.auth.getUserIdentity();
 
     if (!identity) {
-      throw new ConvexError("Unauthorized");
-    }
+        return;
+      }
 
     const room = await ctx.db
       .query("rooms")

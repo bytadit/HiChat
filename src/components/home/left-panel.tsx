@@ -1,10 +1,10 @@
 "use client";
 import {
   ListFilter,
-  LogOut,
+//   LogOut,
   MessageSquareDiff,
   Search,
-  User,
+//   User,
 } from "lucide-react";
 import { Input } from "../ui/input";
 import ThemeSwitch from "@/components/home/theme-switch";
@@ -15,8 +15,9 @@ import {
   SignedIn,
   SignedOut,
   SignInButton,
-  SignOutButton,
+//   SignOutButton,
 } from "@clerk/clerk-react";
+import UserListDialog from "./user-list-dialog";
 
 export default function LeftPanel() {
   return (
@@ -31,7 +32,8 @@ export default function LeftPanel() {
             <SignInButton />
           </SignedOut>
           <div className="flex items-center gap-3">
-            <MessageSquareDiff size={20} />
+            {/* <MessageSquareDiff size={20} /> */}
+            <UserListDialog></UserListDialog>
             <ThemeSwitch />
             {/* <LogOut size={20} className='cursor-pointer' /> */}
           </div>

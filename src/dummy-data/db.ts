@@ -75,6 +75,7 @@ export const messages = [
 export const users = [
   {
     _id: "admin@mail.com",
+    email: "admin@mail.com",
     name: "Admin",
     imageUrl: "https://cdn-icons-png.flaticon.com/512/9703/9703596.png",
     role: 0,
@@ -82,6 +83,7 @@ export const users = [
   },
   {
     _id: "agent@mail.com",
+    email: "agent@mail.com",
     name: "Agent",
     imageUrl: "https://cdn-icons-png.flaticon.com/512/1029/1029023.png",
     role: 1,
@@ -89,6 +91,7 @@ export const users = [
   },
   {
     _id: "user1@mail.com",
+    email: "user1@mail.com",
     name: "User 1",
     imageUrl: "https://randomuser.me/api/portraits/men/67.jpg",
     role: 2,
@@ -96,6 +99,7 @@ export const users = [
   },
   {
     _id: "user2@mail.com",
+    email: "user2@mail.com",
     name: "User 2",
     imageUrl: "https://randomuser.me/api/portraits/women/68.jpg",
     role: 2,
