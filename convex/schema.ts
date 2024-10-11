@@ -7,7 +7,6 @@ export default defineSchema({
 		name: v.optional(v.string()),
 		imageUrl: v.string(),
 		tokenIdentifier: v.string(),
-        role: v.number(),
         isOnline: v.boolean(),
 	}).index("by_tokenIdentifier", ["tokenIdentifier"]),
 

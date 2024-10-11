@@ -6,6 +6,10 @@ const nextConfig = {
           protocol: "https",
           hostname: "agreeable-koala-997.convex.cloud",
         },
+        {
+          protocol: "https",
+          hostname: "static.vecteezy.com",
+        },
       ],
     },
   };

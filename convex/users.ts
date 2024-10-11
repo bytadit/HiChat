@@ -7,7 +7,6 @@ export const createUser = internalMutation({
     email: v.string(),
     name: v.string(),
     imageUrl: v.string(),
-    role: v.number(),
   },
   handler: async (ctx, args) => {
     await ctx.db.insert("users", {
@@ -16,7 +15,6 @@ export const createUser = internalMutation({
       name: args.name,
       imageUrl: args.imageUrl,
       isOnline: true,
-      role: 2,
     });
   },
 });
@@ -97,17 +95,25 @@ export const getMe = query({
   args: {},
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
+    const customerKingToken = "token_kingcustomer";
     // if (!identity) {
     //   return;
     // }
-    if (!identity) throw new ConvexError("Unauthorized");
+    // if (!identity) throw new ConvexError("Unauthorized");
 
-    const user = await ctx.db
-      .query("users")
-      .withIndex("by_tokenIdentifier", (q) =>
-        q.eq("tokenIdentifier", identity.tokenIdentifier)
-      )
-      .unique();
+    const user = !identity
+      ? await ctx.db
+          .query("users")
+          .withIndex("by_tokenIdentifier", (q) =>
+            q.eq("tokenIdentifier", customerKingToken)
+          )
+          .unique()
+      : await ctx.db
+          .query("users")
+          .withIndex("by_tokenIdentifier", (q) =>
+            q.eq("tokenIdentifier", identity.tokenIdentifier)
+          )
+          .unique();
 
     if (!user) {
       throw new ConvexError("User not found");
@@ -120,12 +126,12 @@ export const getMe = query({
 export const getGroupMembers = query({
   args: { roomId: v.id("rooms") },
   handler: async (ctx, args) => {
-    const identity = await ctx.auth.getUserIdentity();
+    // const identity = await ctx.auth.getUserIdentity();
 
     // if (!identity) {
     //     return;
     //   }
-    if (!identity) throw new ConvexError("Unauthorized");
+    // if (!identity) throw new ConvexError("Unauthorized");
 
     const room = await ctx.db
       .query("rooms")

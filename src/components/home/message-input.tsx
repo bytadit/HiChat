@@ -80,13 +80,6 @@ const MessageInput = () => {
             </Button>
           ) : (
 			''
-            // <Button
-            //   type="submit"
-            //   size={"sm"}
-            //   className="bg-transparent text-foreground hover:bg-transparent"
-            // >
-            //   <Mic />
-            // </Button>
           )}
         </div>
       </form>

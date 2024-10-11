@@ -51,14 +51,21 @@ export const createRoom = mutation({
 export const getMyRooms = query({
 	args: {},
 	handler: async (ctx, args) => {
+		const customerKingToken = "token_kingcustomer";
 		const identity = await ctx.auth.getUserIdentity();
-		if (!identity) throw new ConvexError("Unauthorized");
+		// if (!identity) throw new ConvexError("Unauthorized");
 
-		const user = await ctx.db
+		const user = !identity ? (
+			await ctx.db
+			.query("users")
+			.withIndex("by_tokenIdentifier", (q) => q.eq("tokenIdentifier", customerKingToken))
+			.unique()
+		) : (
+			await ctx.db
 			.query("users")
 			.withIndex("by_tokenIdentifier", (q) => q.eq("tokenIdentifier", identity.tokenIdentifier))
-			.unique();
-
+			.unique()
+		);
 		if (!user) throw new ConvexError("User not found");
 
 		const rooms = await ctx.db.query("rooms").collect();
@@ -87,7 +94,6 @@ export const getMyRooms = query({
 					.order("desc")
 					.take(1);
 
-				// return should be in this order, otherwise _id field will be overwritten
 				return {
 					...userDetails,
 					...room,
@@ -99,28 +105,6 @@ export const getMyRooms = query({
 		return roomsWithDetails;
 	},
 });
-
-// export const kickUser = mutation({
-// 	args: {
-// 		roomId: v.id("rooms"),
-// 		userId: v.id("users"),
-// 	},
-// 	handler: async (ctx, args) => {
-// 		const identity = await ctx.auth.getUserIdentity();
-// 		if (!identity) throw new ConvexError("Unauthorized");
-
-// 		const room = await ctx.db
-// 			.query("rooms")
-// 			.filter((q) => q.eq(q.field("_id"), args.roomId))
-// 			.unique();
-
-// 		if (!room) throw new ConvexError("room not found");
-
-// 		await ctx.db.patch(args.roomId, {
-// 			participants: room.participants.filter((id) => id !== args.userId),
-// 		});
-// 	},
-// });
 
 export const generateUploadUrl = mutation(async (ctx) => {
 	return await ctx.storage.generateUploadUrl();

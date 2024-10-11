@@ -1,0 +1,20 @@
+[
+  {
+    "admin": "j97e3v52akaej4rbha85e4bqz172fs5g",
+    "imageUrl": "https://picsum.photos/id/237/200/300",
+    "isGroup": true,
+    "name": "Group Product A",
+    "participants": [
+      "j973305hxfzxvntf9my1ehvvnn72fcze",
+      "j9761xpmzm6r50c7jq86bn2kkx72f8re",
+      "j97c5pq7gw6av9tpsdpm0nfh4n72fy6j"
+    ]
+  },
+  {
+    "isGroup": false,
+    "participants": [
+      "j97c5pq7gw6av9tpsdpm0nfh4n72fy6j",
+      "j976v8kemea54f02ea27vy5sc172e7d4"
+    ]
+  }
+]

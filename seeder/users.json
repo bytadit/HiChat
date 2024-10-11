@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Admin",
+    "email": "admin@mail.com",
+    "imageUrl": "https://static.vecteezy.com/system/resources/thumbnails/043/900/708/small_2x/user-profile-icon-illustration-vector.jpg",
+    "isOnline": true,
+    "tokenIdentifier": "token_admin"
+  },
+  {
+    "name": "Agent A",
+    "email": "agent@mail.com",
+    "imageUrl": "https://static.vecteezy.com/system/resources/previews/017/329/584/non_2x/parent-smiling-icon-flat-happy-person-vector.jpg",
+    "isOnline": false,
+    "tokenIdentifier": "token_agent"
+  },
+  {
+    "name": "King Customer",
+    "email": "kingcust@mail.com",
+    "imageUrl": "https://static.vecteezy.com/system/resources/previews/034/874/688/large_2x/ai-generated-king-avatar-gamer-icon-clip-art-sticker-decoration-simple-background-free-photo.jpg",
+    "isOnline": true,
+    "tokenIdentifier": "token_kingcustomer"
+  },
+  {
+    "name": "Queen Customer",
+    "email": "queencust@mail.com",
+    "imageUrl": "https://static.vecteezy.com/system/resources/previews/021/804/982/non_2x/queen-icon-style-vector.jpg",
+    "isOnline": true,
+    "tokenIdentifier": "token_queencustomer"
+  }
+]

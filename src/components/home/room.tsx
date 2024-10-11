@@ -7,24 +7,6 @@ import { api } from "../../../convex/_generated/api";
 import { useRoomStore } from "@/store/chat-store";
 import { Id } from "./../../../convex/_generated/dataModel";
 
-
-// interface Room {
-// 	_id: Id<"rooms">;
-//     imageUrl: string;
-//     name: string | null;
-// 	participants: Id<"users">[];
-// 	// isOnline: boolean;
-// 	isGroup: boolean;
-// 	_creationTime: number;
-// 	sender: string;
-//     lastMessage: {
-//       type: string;
-// 	  message: string;
-// 	  sender: string;
-//     };
-// 	admin: string | null;
-//   }
-
 const Room = ({ room }: { room: any }) => {
 	const roomImage = room.imageUrl;
 	const roomName = room.name || "Private Chat";

@@ -5,7 +5,7 @@ import DateIndicator from "./date-indicator";
 import { useState } from "react";
 import ReactPlayer from "react-player";
 import Image from "next/image";
-import { Download, FileText } from "lucide-react"; // Or any icon library you prefer
+import { Download, FileText } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription } from "../ui/dialog";
 import ChatAvatarActions from "./chat-avatar-actions";
 
@@ -24,9 +24,9 @@ const ChatBubble = ({ me, message, previousMessage }: ChatBubbleProps) => {
   const { selectedRoom } = useRoomStore();
 
   const isMember =
-    selectedRoom?.participants.includes(message.sender._id) || false;
+    selectedRoom?.participants.includes(message?.sender?._id) || false;
   const isGroup = selectedRoom?.isGroup || false;
-  const fromMe = message.sender._id === me._id;
+  const fromMe = message.sender?._id === me._id;
   const bgClass = fromMe ? "bg-green-chat" : "bg-white dark:bg-gray-primary";
   const [open, setOpen] = useState(false);
 
@@ -137,18 +137,12 @@ const MessageTime = ({ time, fromMe }: { time: string; fromMe: boolean }) => {
 };
 
 const DocumentMessage = ({ message }: { message: IMessage }) => {
-  // Extract the document name from the message (assuming message.message is a URL)
   const documentName = message.message.split("/").pop();
 
   return (
     <div className="flex items-center space-x-4 p-2 rounded-md w-[250px]">
-      {/* Document Icon */}
       <FileText className="text-white" size={20} />
-
-      {/* Document Name */}
       <span className="flex-1 truncate text-sm">{documentName}</span>
-
-      {/* Download Button */}
       <a
         href={message.message}
         download={documentName}
