@@ -161,6 +161,25 @@ export const sendVideo = mutation({
 	},
 });
 
+export const sendDocument = mutation({
+	args: { docId: v.id("_storage"), sender: v.id("users"), room: v.id("rooms") },
+	handler: async (ctx, args) => {
+		const identity = await ctx.auth.getUserIdentity();
+		if (!identity) {
+			throw new ConvexError("Unauthorized");
+		}
+
+		const message = (await ctx.storage.getUrl(args.docId)) as string;
+
+		await ctx.db.insert("messages", {
+			message: message,
+			sender: args.sender,
+			type: "document",
+			room: args.room,
+		});
+	},
+});
+
 // unoptimized
 
 // export const getMessages = query({

@@ -34,9 +34,9 @@ const RightPanel = () => {
 					</div>
 
 					<div className='flex items-center gap-7 mr-5'>
-						<a href='/video-call' target='_blank'>
+						{/* <a href='/video-call' target='_blank'>
 							<Video size={23} />
-						</a>
+						</a> */}
 						<X size={16} className='cursor-pointer' 
 						onClick={() => setSelectedRoom(null)}/>
 					</div>

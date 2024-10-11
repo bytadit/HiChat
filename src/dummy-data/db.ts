@@ -1,16 +1,15 @@
-export const rooms = [
+export const dummyRooms = [
   {
-    _id: "1",
-    admin: "admin@mail.com",
+    _id: "jh7f73nf801hf91bd3acp0bke972f7de",
+    admin: "j97e3v52akaej4rbha85e4bqz172fs5g",
     imageUrl: "https://picsum.photos/id/237/200/300",
     name: "Product A",
     participants: [
-      "admin@mail.com",
-      "agent@mail.com",
-      "customer1@mail.com",
-      "customer2@mail.com",
+      "j97e3v52akaej4rbha85e4bqz172fs5g",
+      "j975rjztz53wrwb139dq02dp4d72d6qg",
+      "j97dv01bwg3w5arcd9c9c6p3xn72crp7",
     ],
-    _creationTime: 1638232272, // Unix timestamp for 2021-11-30 12:04:32 UTC
+    _creationTime: 1728609650334.9045,
     lastMessage: {
       _id: "1",
       type: "image",
@@ -38,7 +37,7 @@ export const rooms = [
   },
 ];
 
-export const messages = [
+export const dummyMessages = [
   {
     _id: 885512,
     type: "text",
@@ -72,7 +71,7 @@ export const messages = [
   },
 ];
 
-export const users = [
+export const dummyUsers = [
   {
     _id: "admin@mail.com",
     email: "admin@mail.com",

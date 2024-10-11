@@ -2,6 +2,12 @@ import { IMessage, useRoomStore } from "@/store/chat-store";
 import { MessageSeenSvg } from "@/lib/svgs";
 import ChatBubbleAvatar from "./chat-bubble-avatar";
 import DateIndicator from "./date-indicator";
+import { useState } from "react";
+import ReactPlayer from "react-player";
+import Image from "next/image";
+import { Download, FileText } from "lucide-react"; // Or any icon library you prefer
+import { Dialog, DialogContent, DialogDescription } from "../ui/dialog";
+import ChatAvatarActions from "./chat-avatar-actions";
 
 type ChatBubbleProps = {
   message: IMessage;
@@ -22,6 +28,24 @@ const ChatBubble = ({ me, message, previousMessage }: ChatBubbleProps) => {
   const isGroup = selectedRoom?.isGroup || false;
   const fromMe = message.sender._id === me._id;
   const bgClass = fromMe ? "bg-green-chat" : "bg-white dark:bg-gray-primary";
+  const [open, setOpen] = useState(false);
+
+  const renderMessageContent = () => {
+    switch (message.type) {
+      case "text":
+        return <TextMessage message={message} />;
+      case "image":
+        return (
+          <ImageMessage message={message} handleClick={() => setOpen(true)} />
+        );
+      case "video":
+        return <VideoMessage message={message} />;
+      case "document":
+        return <DocumentMessage message={message} />;
+      default:
+        return null;
+    }
+  };
 
   if (!fromMe) {
     return (
@@ -37,7 +61,15 @@ const ChatBubble = ({ me, message, previousMessage }: ChatBubbleProps) => {
             className={`flex flex-col z-20 max-w-fit px-2 pt-1 rounded-md shadow-md relative ${bgClass}`}
           >
             <OtherMessageIndicator />
-            <TextMessage message={message} />
+            {<ChatAvatarActions message={message} me={me} />}
+            {renderMessageContent()}
+            {open && (
+              <ImageDialog
+                src={message.message}
+                open={open}
+                onClose={() => setOpen(false)}
+              />
+            )}
             <MessageTime time={time} fromMe={fromMe} />
           </div>
         </div>
@@ -52,7 +84,14 @@ const ChatBubble = ({ me, message, previousMessage }: ChatBubbleProps) => {
           className={`flex ml-auto z-20 max-w-fit px-2 pt-1 rounded-md shadow-md relative ${bgClass}`}
         >
           <SelfMessageIndicator />
-          <TextMessage message={message} />
+          {renderMessageContent()}
+          {open && (
+            <ImageDialog
+              src={message.message}
+              open={open}
+              onClose={() => setOpen(false)}
+            />
+          )}
           <MessageTime time={time} fromMe={fromMe} />
         </div>
       </div>
@@ -94,5 +133,93 @@ const MessageTime = ({ time, fromMe }: { time: string; fromMe: boolean }) => {
     <p className="text-[10px] mt-2 self-end flex gap-1 items-center">
       {time} {fromMe && <MessageSeenSvg />}
     </p>
+  );
+};
+
+const DocumentMessage = ({ message }: { message: IMessage }) => {
+  // Extract the document name from the message (assuming message.message is a URL)
+  const documentName = message.message.split("/").pop();
+
+  return (
+    <div className="flex items-center space-x-4 p-2 rounded-md w-[250px]">
+      {/* Document Icon */}
+      <FileText className="text-white" size={20} />
+
+      {/* Document Name */}
+      <span className="flex-1 truncate text-sm">{documentName}</span>
+
+      {/* Download Button */}
+      <a
+        href={message.message}
+        download={documentName}
+        className="text-white"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Download size={20} />
+      </a>
+    </div>
+  );
+};
+
+const VideoMessage = ({ message }: { message: IMessage }) => {
+  return (
+    <ReactPlayer
+      url={message.message}
+      width="250px"
+      height="250px"
+      controls={true}
+      light={true}
+    />
+  );
+};
+
+const ImageMessage = ({
+  message,
+  handleClick,
+}: {
+  message: IMessage;
+  handleClick: () => void;
+}) => {
+  return (
+    <div className="w-[250px] h-[250px] m-2 relative">
+      <Image
+        src={message.message}
+        fill
+        className="cursor-pointer object-cover rounded"
+        alt="image"
+        onClick={handleClick}
+      />
+    </div>
+  );
+};
+
+const ImageDialog = ({
+  src,
+  onClose,
+  open,
+}: {
+  open: boolean;
+  src: string;
+  onClose: () => void;
+}) => {
+  return (
+    <Dialog
+      open={open}
+      onOpenChange={(isOpen) => {
+        if (!isOpen) onClose();
+      }}
+    >
+      <DialogContent className="min-w-[750px]">
+        <DialogDescription className="relative h-[450px] flex justify-center">
+          <Image
+            src={src}
+            fill
+            className="rounded-lg object-contain"
+            alt="image"
+          />
+        </DialogDescription>
+      </DialogContent>
+    </Dialog>
   );
 };
