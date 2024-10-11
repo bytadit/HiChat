@@ -20,15 +20,18 @@ import {
 import UserListDialog from "./user-list-dialog";
 import { useConvexAuth, useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
+import { useRoomStore } from "@/store/chat-store";
+
 
 export default function LeftPanel() {
   const { isAuthenticated } = useConvexAuth();
+  const {selectedRoom, setSelectedRoom} = useRoomStore();
   // const rooms = useQuery(api.rooms.getMyRooms, 
   //   isAuthenticated ? undefined : "skip"
   // );
   const rooms = useQuery(api.rooms.getMyRooms);
   return (
-    <div className="w-1/4 border-gray-600 border-r">
+    <div className={`w-full md:w-1/4 border-gray-600 border-r ${!selectedRoom ? 'block' : 'hidden md:block '}`}>
       <div className="sticky top-0 bg-left-panel z-10">
         <div className="flex justify-between bg-gray-primary p-3 items-center">
           {/* <User size={24} /> */}
