@@ -9,7 +9,7 @@ export type Room = {
 	name?: string;
 	groupImage?: string;
 	admin?: Id<"users">;
-	isOnline?: boolean;
+	// isOnline?: boolean;
 	lastMessage?: {
 		_id: Id<"messages">;
 		room: Id<"rooms">;

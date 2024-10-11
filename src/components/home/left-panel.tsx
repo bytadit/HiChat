@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import { Input } from "../ui/input";
 import ThemeSwitch from "@/components/home/theme-switch";
-import { rooms } from "@/dummy-data/db";
+// import { rooms } from "@/dummy-data/db";
 import Room from "./room";
 import { UserButton } from "@clerk/nextjs";
 import {
@@ -18,10 +18,14 @@ import {
 //   SignOutButton,
 } from "@clerk/clerk-react";
 import UserListDialog from "./user-list-dialog";
-import { useConvexAuth } from "convex/react";
+import { useConvexAuth, useQuery } from "convex/react";
+import { api } from "../../../convex/_generated/api";
 
 export default function LeftPanel() {
   const { isAuthenticated } = useConvexAuth();
+  const rooms = useQuery(api.rooms.getMyRooms, 
+    isAuthenticated ? undefined : "skip"
+  );
   return (
     <div className="w-1/4 border-gray-600 border-r">
       <div className="sticky top-0 bg-left-panel z-10">
@@ -56,7 +60,7 @@ export default function LeftPanel() {
         </div>
       </div>
       <div className="my-3 flex flex-col gap-0 max-h-[80%] overflow-auto">
-        {rooms.map((room) => (
+        {rooms?.map((room) => (
           <Room key={room._id} {...room} room={room} />
         ))}
 

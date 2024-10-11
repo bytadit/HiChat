@@ -2,12 +2,14 @@ import { formatDate } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { MessageSeenSvg } from "@/lib/svgs";
 import { ImageIcon, Users, VideoIcon } from "lucide-react";
+import { useQuery } from "convex/react";
+import { api } from "../../../convex/_generated/api";
 
 interface Room {
     imageUrl: string;
     name: string | null;
 	participants: string[];
-	isOnline: boolean;
+	// isOnline: boolean;
 	_creationTime: number;
 	sender: string;
     lastMessage: {
@@ -23,15 +25,16 @@ const Room = ({ room }: { room: Room }) => {
 	const roomName = room.name || "Private Chat";
 	const lastMessage = room.lastMessage;
 	const lastMessageType = lastMessage?.type;
-	const authUser = { _id: "admin@mail.com" };
+	// const authUser = { _id: "admin@mail.com" };
+	const me = useQuery(api.users.getMe);
 
 	return (
 		<>
 			<div className={`flex gap-2 items-center p-3 hover:bg-chat-hover cursor-pointer `}>
 				<Avatar className='border border-gray-900 overflow-visible relative'>
-					{room.isOnline && (
+					{/* {room.isOnline && (
 						<div className='absolute top-0 right-0 w-2.5 h-2.5 bg-green-500 rounded-full border-2 border-foreground' />
-					)}
+					)} */}
 					<AvatarImage src={roomImage || "/placeholder.png"} className='object-cover rounded-full' />
 					<AvatarFallback>
 						<div className='animate-pulse bg-gray-tertiary w-full h-full rounded-full'></div>
@@ -45,7 +48,7 @@ const Room = ({ room }: { room: Room }) => {
 						</span>
 					</div>
 					<p className='text-[12px] mt-1 text-gray-500 flex items-center gap-1 '>
-						{lastMessage?.sender === authUser?._id ? <MessageSeenSvg /> : ""}
+						{lastMessage?.sender === me?._id ? <MessageSeenSvg /> : ""}
 						{room.isGroup && <Users size={16} />}
 						{!lastMessage && "Say Hi!"}
 						{lastMessageType === "text" ? lastMessage?.message.length > 30 ? (
