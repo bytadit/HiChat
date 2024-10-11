@@ -4,23 +4,28 @@ import { MessageSeenSvg } from "@/lib/svgs";
 import { ImageIcon, Users, VideoIcon } from "lucide-react";
 import { useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
+import { useRoomStore } from "@/store/chat-store";
+import { Id } from "./../../../convex/_generated/dataModel";
 
-interface Room {
-    imageUrl: string;
-    name: string | null;
-	participants: string[];
-	// isOnline: boolean;
-	_creationTime: number;
-	sender: string;
-    lastMessage: {
-      type: string;
-	  message: string;
-	  sender: string;
-    };
-	admin: string | null;
-  }
 
-const Room = ({ room }: { room: Room }) => {
+// interface Room {
+// 	_id: Id<"rooms">;
+//     imageUrl: string;
+//     name: string | null;
+// 	participants: Id<"users">[];
+// 	// isOnline: boolean;
+// 	isGroup: boolean;
+// 	_creationTime: number;
+// 	sender: string;
+//     lastMessage: {
+//       type: string;
+// 	  message: string;
+// 	  sender: string;
+//     };
+// 	admin: string | null;
+//   }
+
+const Room = ({ room }: { room: any }) => {
 	const roomImage = room.imageUrl;
 	const roomName = room.name || "Private Chat";
 	const lastMessage = room.lastMessage;
@@ -28,9 +33,15 @@ const Room = ({ room }: { room: Room }) => {
 	// const authUser = { _id: "admin@mail.com" };
 	const me = useQuery(api.users.getMe);
 
+	const { setSelectedRoom, selectedRoom } = useRoomStore();
+
+	const activeBgClass = selectedRoom?._id === room._id;
+
 	return (
 		<>
-			<div className={`flex gap-2 items-center p-3 hover:bg-chat-hover cursor-pointer `}>
+			<div className={`flex gap-2 items-center p-3 hover:bg-chat-hover cursor-pointer ${activeBgClass ? "bg-gray-tertiary" : ""}`}
+			onClick={() => setSelectedRoom(room)}
+			>
 				<Avatar className='border border-gray-900 overflow-visible relative'>
 					{/* {room.isOnline && (
 						<div className='absolute top-0 right-0 w-2.5 h-2.5 bg-green-500 rounded-full border-2 border-foreground' />

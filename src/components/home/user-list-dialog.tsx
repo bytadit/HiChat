@@ -42,6 +42,9 @@ const UserListDialog = () => {
   const handleCreateRoom = async () => {
     if (selectedUsers.length === 0) return;
     setIsLoading(true);
+    if (!me) {
+      throw new Error("Unauthorized");
+    }
     try {
         const isGroup = selectedUsers.length > 1;
         let roomId;
@@ -55,12 +58,12 @@ const UserListDialog = () => {
           const postUrl = await generateUploadUrl();
           const result = await fetch(postUrl, {
             method: "POST",
-            headers: {"Content-Type": selectedImage?.type},
+            headers: {"Content-Type": selectedImage?.type as string},
             body: selectedImage
           })
           const { storageId } = await result.json();
           await createRoom({
-            participants: [...selectedUsers, me?._id],
+            participants: [...selectedUsers, me._id],
             isGroup: true,
             name: groupName,
             admin: me?._id,

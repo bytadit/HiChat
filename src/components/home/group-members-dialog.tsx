@@ -1,4 +1,4 @@
-import { users } from "@/dummy-data/db";
+// import { users } from "@/dummy-data/db";
 import {
 	Dialog,
 	DialogContent,
@@ -9,8 +9,16 @@ import {
 } from "@/components/ui/dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Crown } from "lucide-react";
+import { Room } from "@/store/chat-store";
+import { useQuery } from "convex/react";
+import { api } from "../../../convex/_generated/api";
 
-const GroupMembersDialog = () => {
+type GroupMembersDialogProps = {
+	selectedRoom: Room;
+};
+
+const GroupMembersDialog = ({selectedRoom} : GroupMembersDialogProps) => {
+	const users = useQuery(api.users.getGroupMembers, {roomId: selectedRoom._id});
 	return (
 		<Dialog>
 			<DialogTrigger>
@@ -37,7 +45,7 @@ const GroupMembersDialog = () => {
 											<h3 className='text-md font-medium'>
 												{user.name || user._id.split("@")[0]}
 											</h3>
-											{user.role === 0 && <Crown size={16} className='text-yellow-400' />}
+											{user._id === selectedRoom.admin && <Crown size={16} className='text-yellow-400' />}
 										</div>
 									</div>
 								</div>

@@ -7,7 +7,7 @@ export type Room = {
 	participants: Id<"users">[];
 	isGroup: boolean;
 	name?: string;
-	groupImage?: string;
+	// groupImage?: string;
 	admin?: Id<"users">;
 	// isOnline?: boolean;
 	lastMessage?: {
