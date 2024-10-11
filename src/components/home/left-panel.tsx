@@ -18,8 +18,10 @@ import {
 //   SignOutButton,
 } from "@clerk/clerk-react";
 import UserListDialog from "./user-list-dialog";
+import { useConvexAuth } from "convex/react";
 
 export default function LeftPanel() {
+  const { isAuthenticated } = useConvexAuth();
   return (
     <div className="w-1/4 border-gray-600 border-r">
       <div className="sticky top-0 bg-left-panel z-10">
@@ -33,7 +35,7 @@ export default function LeftPanel() {
           </SignedOut>
           <div className="flex items-center gap-3">
             {/* <MessageSquareDiff size={20} /> */}
-            <UserListDialog></UserListDialog>
+            {isAuthenticated && <UserListDialog/>}
             <ThemeSwitch />
             {/* <LogOut size={20} className='cursor-pointer' /> */}
           </div>

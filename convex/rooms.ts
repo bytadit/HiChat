@@ -11,10 +11,10 @@ export const createRoom = mutation({
 	},
 	handler: async (ctx, args) => {
 		const identity = await ctx.auth.getUserIdentity();
-		// if (!identity) throw new ConvexError("Unauthorized");
-        if (!identity) {
-            return;
-          }
+		if (!identity) throw new ConvexError("Unauthorized");
+        // if (!identity) {
+        //     return;
+        //   }
 
 		const existingRoom = await ctx.db
 			.query("rooms")
@@ -122,6 +122,6 @@ export const createRoom = mutation({
 // 	},
 // });
 
-// export const generateUploadUrl = mutation(async (ctx) => {
-// 	return await ctx.storage.generateUploadUrl();
-// });
+export const generateUploadUrl = mutation(async (ctx) => {
+	return await ctx.storage.generateUploadUrl();
+});

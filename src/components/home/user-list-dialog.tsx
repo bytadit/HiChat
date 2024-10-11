@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -26,7 +27,10 @@ const UserListDialog = () => {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [renderedImage, setRenderedImage] = useState("");
   const imgRef = useRef<HTMLInputElement>(null);
+  const dialogCloseRef = useRef<HTMLButtonElement>(null);
+
   const createRoom = useMutation(api.rooms.createRoom);
+  const generateUploadUrl = useMutation(api.rooms.generateUploadUrl);
   const me = useQuery(api.users.getMe);
   const users = useQuery(api.users.getUsers);
   // const dialogCloseRef = useRef<HTMLButtonElement>(null);
@@ -48,9 +52,27 @@ const UserListDialog = () => {
 
             })
         }else{
-
+          const postUrl = await generateUploadUrl();
+          const result = await fetch(postUrl, {
+            method: "POST",
+            headers: {"Content-Type": selectedImage?.type},
+            body: selectedImage
+          })
+          const { storageId } = await result.json();
+          await createRoom({
+            participants: [...selectedUsers, me?._id],
+            isGroup: true,
+            name: groupName,
+            admin: me?._id,
+            imageUrl: storageId
+          });
         }
+        dialogCloseRef.current?.click();
+        setSelectedUsers([]);
+        setGroupName("");
+        setSelectedImage(null);
     } catch (err) {
+      toast.error("Failed to create a room");
       console.error(err);
     } finally {
       setIsLoading(false);
@@ -71,7 +93,7 @@ const UserListDialog = () => {
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          {/* TODO: <DialogClose /> will be here */}
+        <DialogClose ref={dialogCloseRef}/>
           <DialogTitle>USERS</DialogTitle>
         </DialogHeader>
 
