@@ -13,7 +13,6 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { ImageIcon, MessageSquareDiff } from "lucide-react";
-// import { users } from "@/dummy-data/db";
 import { Id } from "../../../convex/_generated/dataModel";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
@@ -33,11 +32,6 @@ const UserListDialog = () => {
   const generateUploadUrl = useMutation(api.rooms.generateUploadUrl);
   const me = useQuery(api.users.getMe);
   const users = useQuery(api.users.getUsers);
-  // const dialogCloseRef = useRef<HTMLButtonElement>(null);
-
-  // const generateUploadUrl = useMutation(api.rooms.generateUploadUrl);
-
-  // const { setSelectedRoom } = useRoomStore();
 
   const handleCreateRoom = async () => {
     if (selectedUsers.length === 0) return;
@@ -185,7 +179,6 @@ const UserListDialog = () => {
               isLoading
             }
           >
-            {/* spinner */}
             {isLoading ? (
               <div className="w-5 h-5 border-t-2 border-b-2  rounded-full animate-spin" />
             ) : (

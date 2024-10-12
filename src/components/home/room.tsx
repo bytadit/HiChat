@@ -12,7 +12,6 @@ const Room = ({ room }: { room: any }) => {
 	const roomName = room.name || "Private Chat";
 	const lastMessage = room.lastMessage;
 	const lastMessageType = lastMessage?.type;
-	// const authUser = { _id: "admin@mail.com" };
 	const me = useQuery(api.users.getMe);
 
 	const { setSelectedRoom, selectedRoom } = useRoomStore();
@@ -25,9 +24,6 @@ const Room = ({ room }: { room: any }) => {
 			onClick={() => setSelectedRoom(room)}
 			>
 				<Avatar className='border border-gray-900 overflow-visible relative'>
-					{/* {room.isOnline && (
-						<div className='absolute top-0 right-0 w-2.5 h-2.5 bg-green-500 rounded-full border-2 border-foreground' />
-					)} */}
 					<AvatarImage src={roomImage || "/placeholder.png"} className='object-cover rounded-full' />
 					<AvatarFallback>
 						<div className='animate-pulse bg-gray-tertiary w-full h-full rounded-full'></div>

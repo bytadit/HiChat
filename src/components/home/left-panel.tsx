@@ -26,15 +26,11 @@ import { useRoomStore } from "@/store/chat-store";
 export default function LeftPanel() {
   const { isAuthenticated } = useConvexAuth();
   const {selectedRoom, setSelectedRoom} = useRoomStore();
-  // const rooms = useQuery(api.rooms.getMyRooms, 
-  //   isAuthenticated ? undefined : "skip"
-  // );
   const rooms = useQuery(api.rooms.getMyRooms);
   return (
     <div className={`w-full md:w-1/4 border-gray-600 border-r ${!selectedRoom ? 'block' : 'hidden md:block '}`}>
       <div className="sticky top-0 bg-left-panel z-10">
         <div className="flex justify-between bg-gray-primary p-3 items-center">
-          {/* <User size={24} /> */}
           <SignedIn>
             <UserButton />
           </SignedIn>
@@ -42,10 +38,8 @@ export default function LeftPanel() {
             <SignInButton />
           </SignedOut>
           <div className="flex items-center gap-3">
-            {/* <MessageSquareDiff size={20} /> */}
             {isAuthenticated && <UserListDialog/>}
             <ThemeSwitch />
-            {/* <LogOut size={20} className='cursor-pointer' /> */}
           </div>
         </div>
         <div className="p-3 flex items-center">

@@ -109,7 +109,7 @@ const SelfMessageIndicator = () => (
 );
 
 const TextMessage = ({ message }: { message: IMessage }) => {
-  const isLink = /^(ftp|http|https):\/\/[^ "]+$/.test(message.message); // Check if the content is a URL
+  const isLink = /^(ftp|http|https):\/\/[^ "]+$/.test(message.message);
 
   return (
     <div>
@@ -140,7 +140,7 @@ const DocumentMessage = ({ message }: { message: IMessage }) => {
   const documentName = message.message.split("/").pop();
 
   return (
-    <div className="flex items-center space-x-4 p-2 rounded-md w-[250px]">
+    <div className="flex items-center space-x-4 p-2 rounded-md w-[200px]">
       <FileText className="text-white" size={20} />
       <span className="flex-1 truncate text-sm">{documentName}</span>
       <a
@@ -160,8 +160,8 @@ const VideoMessage = ({ message }: { message: IMessage }) => {
   return (
     <ReactPlayer
       url={message.message}
-      width="250px"
-      height="250px"
+      width="200px"
+      height="200px"
       controls={true}
       light={true}
     />
@@ -176,7 +176,7 @@ const ImageMessage = ({
   handleClick: () => void;
 }) => {
   return (
-    <div className="w-[250px] h-[250px] m-2 relative">
+    <div className="w-[200px] h-[200px] m-2 relative">
       <Image
         src={message.message}
         fill

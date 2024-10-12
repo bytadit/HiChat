@@ -40,9 +40,6 @@ const ChatAvatarActions = ({ me, message }: ChatAvatarActionsProps) => {
 			onClick={handleCreateRoom}
 		>
 			{isGroup && message.sender?.name}
-			{/* {isGroup && isMember && selectedRoom?.admin === me._id && (
-				<LogOut size={16} className='text-red-500 opacity-0 group-hover:opacity-100' onClick={handleKickUser} />
-			)} */}
 		</div>
 	);
 };

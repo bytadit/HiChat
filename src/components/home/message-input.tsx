@@ -2,7 +2,7 @@ import { Laugh, Mic, Plus, Send } from "lucide-react";
 import { Input } from "../ui/input";
 import { useState } from "react";
 import { Button } from "../ui/button";
-import { useMutation, useQuery } from "convex/react";
+import { useMutation, useQuery, useConvexAuth } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { useRoomStore } from "@/store/chat-store";
 import toast from "react-hot-toast";
@@ -15,6 +15,8 @@ const MessageInput = () => {
   const sendTextMsg = useMutation(api.messages.sendTextMessage);
   const me = useQuery(api.users.getMe);
   const { selectedRoom } = useRoomStore();
+  const { isAuthenticated } = useConvexAuth();
+
 
   const { ref, isComponentVisible, setIsComponentVisible } =
     useComponentVisible(false);
@@ -56,14 +58,14 @@ const MessageInput = () => {
           )}
           <Laugh className="text-gray-600 dark:text-gray-400" />
         </div>
-        {/* <Plus className="text-gray-600 dark:text-gray-400" /> */}
 		<MediaDropdown/>
       </div>
       <form onSubmit={handleSendTextMsg} className="w-full flex gap-3">
         <div className="flex-1">
           <Input
             type="text"
-            placeholder="Type a message"
+			{...(isAuthenticated ? {} : { disabled: true })}
+            placeholder={`${!isAuthenticated ? "Sign in to send messages" : "Type a message"}`}
             className="py-2 text-sm w-full rounded-lg shadow-sm bg-gray-tertiary focus-visible:ring-transparent"
             value={msgText}
             onChange={(e) => setMsgText(e.target.value)}
@@ -73,6 +75,7 @@ const MessageInput = () => {
           {msgText.length > 0 ? (
             <Button
               type="submit"
+			  {...(isAuthenticated ? {} : { disabled: true })}
               size={"sm"}
               className="bg-transparent text-foreground hover:bg-transparent"
             >
