@@ -17,7 +17,7 @@ import { Id } from "../../../convex/_generated/dataModel";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import toast from "react-hot-toast";
-import { useRoomStore } from "@/store/chat-store";
+// import { useRoomStore } from "@/store/chat-store";
 
 const UserListDialog = () => {
   const [selectedUsers, setSelectedUsers] = useState<Id<"users">[]>([]);
@@ -41,9 +41,8 @@ const UserListDialog = () => {
     }
     try {
         const isGroup = selectedUsers.length > 1;
-        let roomId;
         if(!isGroup){
-            roomId = await createRoom({
+            await createRoom({
                 participants: [...selectedUsers, me?._id],
                 isGroup: false,
 

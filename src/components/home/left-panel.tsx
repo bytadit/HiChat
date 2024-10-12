@@ -2,7 +2,7 @@
 import {
   ListFilter,
 //   LogOut,
-  MessageSquareDiff,
+  // MessageSquareDiff,
   Search,
 //   User,
 } from "lucide-react";
@@ -25,7 +25,7 @@ import { useRoomStore } from "@/store/chat-store";
 
 export default function LeftPanel() {
   const { isAuthenticated } = useConvexAuth();
-  const {selectedRoom, setSelectedRoom} = useRoomStore();
+  const {selectedRoom} = useRoomStore();
   const rooms = useQuery(api.rooms.getMyRooms);
   return (
     <div className={`w-full md:w-1/4 border-gray-600 border-r ${!selectedRoom ? 'block' : 'hidden md:block '}`}>

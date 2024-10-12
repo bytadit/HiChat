@@ -5,7 +5,7 @@ import { ImageIcon, Users, VideoIcon, FileIcon } from "lucide-react";
 import { useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { useRoomStore } from "@/store/chat-store";
-import { Id } from "./../../../convex/_generated/dataModel";
+// import { Id } from "./../../../convex/_generated/dataModel";
 
 const Room = ({ room }: { room: any }) => {
 	const roomImage = room.imageUrl;
